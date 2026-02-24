@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+body {
+  font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  padding: 2.5rem 1.25rem;
+  background: radial-gradient(1200px 600px at 10% 10%, #ffe8c7 0%, transparent 55%),
+              radial-gradient(1000px 500px at 90% 10%, #cfe9ff 0%, transparent 55%),
+              linear-gradient(180deg, #f6f2ea 0%, #f3f6ff 100%);
+  color: #1d2025;
+  overflow-x: hidden;
+}
+.app {
+  max-width: 520px;
+  margin: 2.5rem auto;
+  padding: 2rem 2rem 1.75rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 30px 70px rgba(20, 25, 36, 0.12);
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+
+.header { margin-bottom: 1.5rem; }
+.header h1 {
+  margin: 0;
+  font-size: 2.25rem;
+  letter-spacing: -0.04em;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-row label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #4a5260;
+}
+
+.form-row input {
+  width: min(240px, 90%);
+  padding: 0.65rem 0.9rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  border: 1px solid #d7dbe3;
+  background: #f9fafc;
+  text-align: center;
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: #4667ff;
+  box-shadow: 0 0 0 3px rgba(70, 103, 255, 0.2);
+}
+
+.buttons { display: flex; justify-content: center; margin-bottom: 1.25rem; }
+
+button {
+  padding: 0.7rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #2c5bff 0%, #4f83ff 100%);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 10px 20px rgba(44, 91, 255, 0.2);
+}
+
+button:hover { transform: translateY(-1px); box-shadow: 0 14px 24px rgba(44, 91, 255, 0.28); }
+button:active { transform: translateY(0); }
+button:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+
+.status { color: #4a5260; }
+.error { color: #b00020; }
+.result {
+  margin-top: 0.75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+  body { padding: 2rem 1rem; }
+  .app { padding: 1.75rem 1.5rem 1.5rem; }
+  .header h1 { font-size: 1.9rem; }
+}
+

@@ -1,0 +1,28 @@
+# Ignore home directory artifacts
+.bash_history
+.bash_logout
+.bashrc
+.cache/
+.config/
+.copilot/
+.docker/
+.dotnet/
+.gitconfig
+.npm/
+.profile
+.ssh/
+.vscode-server/
+.wget-hsts
+
+# App build artifacts
+**/node_modules/
+**/dist/
+**/.env.local
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+**/.venv/
+
+# Editor/OS
+.DS_Store
+*.lock
