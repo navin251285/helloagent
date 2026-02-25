@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Vector Database (except repo, store files only)
+chroma_db/
+
+# Node
+node_modules/
+package-lock.json
+
+# Generated files
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Keep important data files but ignore generated ones
+# patients_data.csv - INCLUDED
+# patient_summaries.csv - INCLUDED
+# patients.csv - INCLUDED
