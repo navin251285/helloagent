@@ -1,0 +1,72 @@
+================================================================================
+⚠️  ACTION REQUIRED: RESTART THE SERVER
+================================================================================
+
+The server is running OLD CODE (started at 11:27 before Chroma DB fixes).
+This is why search returns "No patients found".
+
+📍 SERVER LOCATION
+------------------
+The server is running on port 8765 (process ID: 12356)
+Terminal: pts/2
+
+🔧 HOW TO RESTART
+------------------
+
+OPTION 1: Manual Restart (RECOMMENDED)
+---------------------------------------
+1. Look at your open terminals
+2. Find the one showing:
+   "INFO: Uvicorn running on http://127.0.0.1:8765"
+   OR
+   "python mcp_server.py"
+
+3. In that terminal:
+   - Press: Ctrl+C
+   - Wait for it to stop
+
+4. Then run:
+   cd /home/navinkumar_25_gmail_com/mcp_tutorial/11_mcp_llm_web_socket
+   python3 mcp_server.py
+
+5. VERIFY you see these NEW messages:
+   [INIT] ✅ Chroma DB initialized successfully
+   [INIT] Found 2 collections:
+   [INIT]   - patient_profiles: 356 items
+   [INIT]   - patients: 100 items
+
+
+OPTION 2: Force Kill (if Ctrl+C doesn't work)
+----------------------------------------------
+Run this in ANY terminal:
+   kill 12356
+
+Then start the server:
+   cd /home/navinkumar_25_gmail_com/mcp_tutorial/11_mcp_llm_web_socket
+   python3 mcp_server.py
+
+
+✅ AFTER RESTARTING
+--------------------
+Run this test to verify everything works:
+
+   cd /home/navinkumar_25_gmail_com/mcp_tutorial/11_mcp_llm_web_socket
+   python3 test_full_workflow.py
+
+You should see:
+   ✅ ALL TESTS PASSED!
+   ✅ Workflow verified: Search → Select → Update → Persist
+
+Then you can run the actual client:
+   python3 mcp_client.py
+
+
+🎯 EXPECTED OUTCOME
+--------------------
+After restart:
+- Search for "diabetes" → Returns 5 patients
+- Select patient → Shows details
+- Update summary → Saves to patient_summaries.csv
+- File verification → Summary persists
+
+================================================================================
