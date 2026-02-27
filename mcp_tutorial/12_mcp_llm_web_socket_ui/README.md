@@ -16,7 +16,7 @@ python mcp_server.py
 ## UI setup
 
 ```bash
-cd /home/navinkumar_25_gmail_com/12_mcp_llm_web_socket_ui
+cd mcp_tutorial/12_mcp_llm_web_socket_ui
 npm install
 npm run dev
 ```
@@ -24,7 +24,7 @@ npm run dev
 ## Production build
 
 ```bash
-cd /home/navinkumar_25_gmail_com/12_mcp_llm_web_socket_ui
+cd mcp_tutorial/12_mcp_llm_web_socket_ui
 npm run build
 npm run start
 ```
