@@ -145,6 +145,86 @@ class MultiToolOrchestrationHTTPClient:
         print("=" * 60 + "\n")
 
 
+    def interactive_mode(self):
+        """Run in interactive mode with menu"""
+        print("\n" + "=" * 60)
+        print("INTERACTIVE MODE")
+        print("=" * 60)
+        print("You can now call tools interactively.")
+        print("Type 'quit' or 'exit' to stop.\n")
+        
+        while True:
+            print("\n" + "─" * 60)
+            print("MENU:")
+            print("─" * 60)
+            print("1. tool_sum - Sum two numbers")
+            print("2. tool_multiply - Multiply two numbers (uses last_sum if available)")
+            print("3. tool_subtract - Subtract two numbers")
+            print("4. tool_divide - Divide two numbers")
+            print("5. tool_average - Average a list of numbers")
+            print("6. list_tools - Show all available tools")
+            print("7. show_state - Show current shared state")
+            print("8. demo - Run the full orchestration demo")
+            print("9. quit - Exit")
+            print("─" * 60)
+            
+            choice = input("\nSelect an option (1-9): ").strip()
+            
+            if choice in ['9', 'quit', 'exit', 'q']:
+                print("\n✓ Goodbye!\n")
+                break
+            
+            try:
+                if choice == '1':
+                    a = float(input("Enter first number (a): "))
+                    b = float(input("Enter second number (b): "))
+                    result = self.call_tool("tool_sum", {"a": a, "b": b}, 0, f"Sum {a} + {b}")
+                    
+                elif choice == '2':
+                    a = float(input("Enter first number (a): "))
+                    b = float(input("Enter second number (b): "))
+                    result = self.call_tool("tool_multiply", {"a": a, "b": b}, 0, f"Multiply {a} * {b}")
+                    
+                elif choice == '3':
+                    a = float(input("Enter first number (a): "))
+                    b = float(input("Enter second number (b): "))
+                    result = self.call_tool("tool_subtract", {"a": a, "b": b}, 0, f"Subtract {a} - {b}")
+                    
+                elif choice == '4':
+                    a = float(input("Enter numerator (a): "))
+                    b = float(input("Enter denominator (b): "))
+                    result = self.call_tool("tool_divide", {"a": a, "b": b}, 0, f"Divide {a} / {b}")
+                    
+                elif choice == '5':
+                    numbers_str = input("Enter numbers separated by commas (e.g., 1,2,3,4): ")
+                    numbers = [float(x.strip()) for x in numbers_str.split(',')]
+                    result = self.call_tool("tool_average", {"numbers": numbers}, 0, f"Average of {numbers}")
+                    
+                elif choice == '6':
+                    self.list_tools()
+                    
+                elif choice == '7':
+                    response = self.call_server("call_tool", {"name": "tool_sum", "arguments": {"a": 0, "b": 0}})
+                    shared_state = response.get("result", {}).get("shared_state", {})
+                    print("\n📊 Current Shared State:")
+                    if shared_state:
+                        for key, value in shared_state.items():
+                            print(f"   {key}: {value}")
+                    else:
+                        print("   (empty)")
+                    
+                elif choice == '8':
+                    self.run_orchestration_demo()
+                    
+                else:
+                    print("❌ Invalid choice. Please select 1-9.")
+                    
+            except ValueError as e:
+                print(f"❌ Invalid input: {e}")
+            except Exception as e:
+                print(f"❌ Error: {e}")
+
+
 def main():
     """Run the demo"""
     print("=" * 60)
@@ -155,16 +235,28 @@ def main():
         client = MultiToolOrchestrationHTTPClient()
         print("✓ Connected to http://127.0.0.1:3000\n")
         
-        # List available tools
-        client.list_tools()
+        # Ask user what mode they want
+        print("Choose mode:")
+        print("1. Interactive mode (call tools one by one)")
+        print("2. Demo mode (run full orchestration workflow)")
         
-        # Run orchestration workflow
-        client.run_orchestration_demo()
+        mode = input("\nSelect mode (1 or 2): ").strip()
+        
+        if mode == '1':
+            client.interactive_mode()
+        else:
+            # List available tools
+            client.list_tools()
+            
+            # Run orchestration workflow
+            client.run_orchestration_demo()
         
     except urllib.error.URLError as e:
         print(f"❌ Error: Cannot connect to server")
         print(f"   Make sure the server is running: python mcp_server_http.py")
         print(f"   Details: {e}")
+    except KeyboardInterrupt:
+        print("\n\n✓ Interrupted by user. Goodbye!\n")
     except Exception as e:
         print(f"❌ Error: {e}")
         import traceback
