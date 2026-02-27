@@ -11,7 +11,8 @@ patient_id,name,summary
 10,Anthony Edwards,
 11,Jerry Rivera,"Jerry Rivera, age 59, is experiencing confusion, numbness in limbs, sweating, and difficulty breathing. His blood pressure is high at 145/91 and his blood sugar level is 208 mg/dL. He has diabetes and takes albuterol medication. A risk score of 6.6 indicates a high likelihood of developing diabetes-related complications. I recommend that he consults with his healthcare provider for further evaluation and management of his condition."
 12,Sharon Clark,
-13,Donald Evans,
+13,Donald Evans," Donald Evans, 40 years old male, reports joint pain, dizziness, and swelling in his legs. He has a history of diabetes with blood sugar levels at 188 mg/dL. His current medication includes lisinopril, but he is at high risk for heart disease due to his age and medical history. I recommend that he follow up with his primary care physician immediately for further evaluation and management.
+"
 14,Helen Taylor,
 15,Margaret Thomas,
 16,Amanda Gutierrez,
@@ -45,7 +46,8 @@ Based on Janet Lee's medical history and current symptoms of numbness in limbs, 
 42,Carolyn Martinez,
 43,Margaret Wright,
 44,Steven Cooper,
-45,Janet Torres,"Based on Janet Torres' medical history, age, and current symptoms, it is concerning that she has high blood pressure, diabetes, and arthritis as well as confusion and difficulty breathing. Her risk score indicates an increased likelihood of developing complications from her conditions, which may require immediate medical intervention. It is important for her to closely monitor her glucose levels, take her medications regularly, and consult with a healthcare professional if her symptoms worsen."
+45,Janet Torres," Based on the patient's current symptoms and medical history, it is important to monitor her breathing and alert for any signs of respiratory distress. Her blood pressure is high and her blood sugar levels are elevated, which may indicate an increased risk of complications such as heart disease or stroke. As such, regular monitoring and management of her hypertension and diabetes are crucial in preventing further health issues. It would also be beneficial to assess her nutrition status, as malnutrition can exacerbate existing conditions such as arthritis.
+"
 46,Ruth Smith,
 47,Raymond Hall,
 48,Mary Turner,
@@ -70,7 +72,8 @@ Based on Janet Lee's medical history and current symptoms of numbness in limbs, 
 67,Melissa Ramos,
 68,Catherine Thomas,
 69,Sarah Gutierrez,"Sarah Gutierrez is 31 years old, female, experiencing shortness of breath and difficulty breathing. Blood pressure is high at 107/83 mmHg, with elevated blood sugar level at 118 mg/dL. She has no medical history, but is currently taking aspirin and warfarin medications. Based on these findings, there may be an underlying respiratory or cardiac issue that needs further investigation and management. Follow-up with a healthcare provider is recommended for proper diagnosis and treatment plan."
-70,Jerry Young,
+70,Jerry Young," Based on the patient's medical history and current symptoms of shortness of breath and weakness, along with her blood pressure and glucose levels, it appears that she may have heart failure. Her risk score of 7.2 indicates a moderate risk for cardiovascular disease. I recommend further evaluation by a cardiologist and potentially adjusting her medications to better manage her conditions.
+"
 71,Stephen Morales,
 72,Christopher Smith,
 73,Katherine Nelson,
@@ -84,7 +87,8 @@ Based on Janet Lee's medical history and current symptoms of numbness in limbs, 
 81,James Campbell,
 82,Emma Nguyen,
 83,Ruth Robinson,
-84,Patrick Robinson,
+84,Patrick Robinson," Based on the provided information, Patrick Robinson is a 46-year old male with current symptoms of sweating and cough. His blood pressure and blood sugar levels are within normal limits, but his medical history shows hypertension. He is currently taking lisinopril for this condition. A risk score of 4.2 indicates that he may be at high risk for developing diabetes. It would be recommended to monitor his blood sugar levels regularly and consult with a healthcare professional regarding additional steps to reduce his risk of diabetes development.
+"
 85,Paul Hernandez,
 86,Donald Wright,
 87,Jason Nelson,
