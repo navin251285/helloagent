@@ -14,7 +14,10 @@ from mcp.server.stdio import stdio_server
 # ========================================
 # SHARED STATE (Inter-Tool Communication)
 # ========================================
-SHARED_STATE: Dict[str, Any] = {}
+SHARED_STATE: Dict[str, Any] = {
+    "accumulator": 0,  # Running result like a calculator
+    "history": [],     # Track all operations
+}
 
 # ========================================
 # TOOL VERSIONING
@@ -32,52 +35,73 @@ TOOL_VERSIONS = {
 # ========================================
 
 async def tool_sum(a: float, b: float) -> float:
-    """Sum two numbers and store result in shared state"""
+    """Sum two numbers and store result in accumulator"""
     await asyncio.sleep(0.5)  # Simulate processing
     result = a + b
+    SHARED_STATE["accumulator"] = result
     SHARED_STATE["last_sum"] = result
+    SHARED_STATE["history"].append(f"SUM: {a} + {b} = {result}")
     print(f"[TOOL_SUM v{TOOL_VERSIONS['tool_sum']}] {a} + {b} = {result}")
+    print(f"[ACCUMULATOR] {result}")
     return result
 
 
 async def tool_multiply(a: float, b: float) -> float:
     """
-    Multiply two numbers
-    DEPENDENCY: If last_sum exists in shared state, add it to 'a' before multiplying
+    Multiply: Uses accumulator if a is not provided (a=0 means use accumulator)
     """
     await asyncio.sleep(0.5)
     
-    # Inter-tool dependency: use last_sum if available
-    if "last_sum" in SHARED_STATE:
-        original_a = a
-        a = a + SHARED_STATE["last_sum"]
-        print(f"[TOOL_MULTIPLY v{TOOL_VERSIONS['tool_multiply']}] Using last_sum: {original_a} + {SHARED_STATE['last_sum']} = {a}")
+    # If a is 0, use accumulator value (calculator behavior)
+    if a == 0 and SHARED_STATE["accumulator"] != 0:
+        a = SHARED_STATE["accumulator"]
+        print(f"[TOOL_MULTIPLY v{TOOL_VERSIONS['tool_multiply']}] Using accumulator: {a}")
     
     result = a * b
+    SHARED_STATE["accumulator"] = result
     SHARED_STATE["last_multiply"] = result
+    SHARED_STATE["history"].append(f"MULTIPLY: {a} * {b} = {result}")
     print(f"[TOOL_MULTIPLY v{TOOL_VERSIONS['tool_multiply']}] {a} * {b} = {result}")
+    print(f"[ACCUMULATOR] {result}")
     return result
 
 
 async def tool_subtract(a: float, b: float) -> float:
-    """Subtract b from a and store result"""
+    """Subtract: Uses accumulator if a is not provided (a=0 means use accumulator)"""
     await asyncio.sleep(0.3)
+    
+    # If a is 0, use accumulator value (calculator behavior)
+    if a == 0 and SHARED_STATE["accumulator"] != 0:
+        a = SHARED_STATE["accumulator"]
+        print(f"[TOOL_SUBTRACT v{TOOL_VERSIONS['tool_subtract']}] Using accumulator: {a}")
+    
     result = a - b
+    SHARED_STATE["accumulator"] = result
     SHARED_STATE["last_subtract"] = result
+    SHARED_STATE["history"].append(f"SUBTRACT: {a} - {b} = {result}")
     print(f"[TOOL_SUBTRACT v{TOOL_VERSIONS['tool_subtract']}] {a} - {b} = {result}")
+    print(f"[ACCUMULATOR] {result}")
     return result
 
 
 async def tool_divide(a: float, b: float) -> float:
-    """Divide a by b and store result (handles division by zero)"""
+    """Divide: Uses accumulator if a is not provided (a=0 means use accumulator)"""
     await asyncio.sleep(0.3)
+    
+    # If a is 0, use accumulator value (calculator behavior)
+    if a == 0 and SHARED_STATE["accumulator"] != 0:
+        a = SHARED_STATE["accumulator"]
+        print(f"[TOOL_DIVIDE v{TOOL_VERSIONS['tool_divide']}] Using accumulator: {a}")
     
     if b == 0:
         print(f"[TOOL_DIVIDE v{TOOL_VERSIONS['tool_divide']}] Error: Division by zero")
         result = None
     else:
         result = a / b
+        SHARED_STATE["accumulator"] = result
+        SHARED_STATE["history"].append(f"DIVIDE: {a} / {b} = {result}")
         print(f"[TOOL_DIVIDE v{TOOL_VERSIONS['tool_divide']}] {a} / {b} = {result}")
+        print(f"[ACCUMULATOR] {result}")
     
     SHARED_STATE["last_divide"] = result
     return result
@@ -95,8 +119,11 @@ async def tool_average(numbers: list) -> float:
         return None
     
     result = sum(numbers) / len(numbers)
+    SHARED_STATE["accumulator"] = result
     SHARED_STATE["last_average"] = result
+    SHARED_STATE["history"].append(f"AVERAGE: {numbers} = {result}")
     print(f"[TOOL_AVERAGE v{TOOL_VERSIONS['tool_average']}] Average of {numbers} = {result}")
+    print(f"[ACCUMULATOR] {result}")
     return result
 
 
@@ -173,6 +200,15 @@ async def list_tools() -> list[Tool]:
                 "required": ["numbers"],
             },
         ),
+        Tool(
+            name="get_state",
+            description="Get current accumulator value and operation history without modifying state.",
+            inputSchema={
+                "type": "object",
+                "properties": {},
+                "required": [],
+            },
+        ),
     ]
 
 
@@ -188,7 +224,10 @@ async def call_tool(name: str, arguments: Any) -> list[TextContent]:
     print(f"{'='*50}")
     
     try:
-        if name == "tool_sum":
+        if name == "get_state":
+            # Just return state without modifying it
+            result = None
+        elif name == "tool_sum":
             result = await tool_sum(arguments["a"], arguments["b"])
         elif name == "tool_multiply":
             result = await tool_multiply(arguments["a"], arguments["b"])

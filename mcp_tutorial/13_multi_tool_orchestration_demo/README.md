@@ -22,6 +22,25 @@ This demo demonstrates how multiple MCP tools can work together:
 3. **Versioning**: Each tool has a version number (e.g., "1.0", "1.1")
 4. **Orchestration**: Client calls 5 tools in sequence to solve a workflow
 
+### 🧮 Calculator Mode (Accumulator Pattern)
+
+The server implements a **calculator-like accumulator** that persists across all operations:
+
+- **Running Accumulator**: `SHARED_STATE["accumulator"]` stores the current result
+- **Operation History**: `SHARED_STATE["history"]` tracks all operations performed
+- **Smart Input**: When you enter **0** as the first number (`a`), tools automatically use the current accumulator value
+- **Final Result**: When you quit, it displays the final accumulator value and complete operation history
+
+**Example Workflow:**
+```
+1. Sum 10 + 5        → Accumulator: 15  | History: SUM: 10 + 5 = 15
+2. Multiply 0 * 2    → Accumulator: 30  | History: MULTIPLY: 15 * 2 = 30
+3. Subtract 0 - 5    → Accumulator: 25  | History: SUBTRACT: 30 - 5 = 25
+4. Quit              → Shows Final Accumulator: 25 (3 operations)
+```
+
+This allows you to chain operations naturally without manually passing results between calls.
+
 ---
 
 ## 🏗️ Architecture
@@ -60,11 +79,12 @@ This demo demonstrates how multiple MCP tools can work together:
 
 | Tool | Description | Shared State Key | Version |
 |------|-------------|------------------|---------|
-| `tool_sum` | Sum two numbers | `last_sum` | 1.0 |
-| `tool_multiply` | Multiply two numbers (uses `last_sum` if available) | `last_multiply` | 1.1 |
-| `tool_subtract` | Subtract b from a | `last_subtract` | 1.0 |
-| `tool_divide` | Divide a by b | `last_divide` | 1.0 |
+| `tool_sum` | Sum two numbers (uses accumulator if a=0) | `last_sum`, `accumulator` | 1.0 |
+| `tool_multiply` | Multiply two numbers (uses accumulator if a=0) | `last_multiply`, `accumulator` | 1.1 |
+| `tool_subtract` | Subtract b from a (uses accumulator if a=0) | `last_subtract`, `accumulator` | 1.0 |
+| `tool_divide` | Divide a by b (uses accumulator if a=0) | `last_divide`, `accumulator` | 1.0 |
 | `tool_average` | Average a list of numbers | `last_average` | 1.0 |
+| `get_state` | Get current accumulator and history (read-only) | - | - |
 
 ---
 

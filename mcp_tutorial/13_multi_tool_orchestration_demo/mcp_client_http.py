@@ -148,30 +148,54 @@ class MultiToolOrchestrationHTTPClient:
     def interactive_mode(self):
         """Run in interactive mode with menu"""
         print("\n" + "=" * 60)
-        print("INTERACTIVE MODE")
+        print("INTERACTIVE MODE - CALCULATOR")
         print("=" * 60)
-        print("You can now call tools interactively.")
-        print("Type 'quit' or 'exit' to stop.\n")
+        print("Works like a calculator with running accumulator.")
+        print("Enter '0' for first number to use current accumulator.")
+        print("Type 'quit' or 'exit' to stop and see final result.\n")
         
         while True:
             print("\n" + "─" * 60)
             print("MENU:")
             print("─" * 60)
             print("1. tool_sum - Sum two numbers")
-            print("2. tool_multiply - Multiply two numbers (uses last_sum if available)")
-            print("3. tool_subtract - Subtract two numbers")
-            print("4. tool_divide - Divide two numbers")
+            print("2. tool_multiply - Multiply (enter 0 for first number to use accumulator)")
+            print("3. tool_subtract - Subtract (enter 0 for first number to use accumulator)")
+            print("4. tool_divide - Divide (enter 0 for first number to use accumulator)")
             print("5. tool_average - Average a list of numbers")
             print("6. list_tools - Show all available tools")
-            print("7. show_state - Show current shared state")
+            print("7. show_state - Show current accumulator and history")
             print("8. demo - Run the full orchestration demo")
-            print("9. quit - Exit")
+            print("9. quit - Exit and show final result")
             print("─" * 60)
             
             choice = input("\nSelect an option (1-9): ").strip()
             
             if choice in ['9', 'quit', 'exit', 'q']:
-                print("\n✓ Goodbye!\n")
+                # Show final result
+                print("\n" + "=" * 60)
+                print("FINAL RESULT")
+                print("=" * 60)
+                try:
+                    response = self.call_server("call_tool", {"name": "get_state", "arguments": {}})
+                    shared_state = response.get("result", {}).get("shared_state", {})
+                    accumulator = shared_state.get("accumulator", 0)
+                    history = shared_state.get("history", [])
+                    
+                    print(f"\nFinal Accumulator Value: {accumulator}\n")
+                    
+                    if history:
+                        print("Operation History:")
+                        for i, op in enumerate(history, 1):
+                            print(f"  {i}. {op}")
+                    else:
+                        print("No operations performed.")
+                    
+                    print("=" * 60)
+                except:
+                    pass
+                    
+                print("✓ Goodbye!\n")
                 break
             
             try:
@@ -181,17 +205,17 @@ class MultiToolOrchestrationHTTPClient:
                     result = self.call_tool("tool_sum", {"a": a, "b": b}, 0, f"Sum {a} + {b}")
                     
                 elif choice == '2':
-                    a = float(input("Enter first number (a): "))
+                    a = float(input("Enter first number (a, 0=use accumulator): "))
                     b = float(input("Enter second number (b): "))
                     result = self.call_tool("tool_multiply", {"a": a, "b": b}, 0, f"Multiply {a} * {b}")
                     
                 elif choice == '3':
-                    a = float(input("Enter first number (a): "))
+                    a = float(input("Enter first number (a, 0=use accumulator): "))
                     b = float(input("Enter second number (b): "))
                     result = self.call_tool("tool_subtract", {"a": a, "b": b}, 0, f"Subtract {a} - {b}")
                     
                 elif choice == '4':
-                    a = float(input("Enter numerator (a): "))
+                    a = float(input("Enter numerator (a, 0=use accumulator): "))
                     b = float(input("Enter denominator (b): "))
                     result = self.call_tool("tool_divide", {"a": a, "b": b}, 0, f"Divide {a} / {b}")
                     
@@ -206,12 +230,19 @@ class MultiToolOrchestrationHTTPClient:
                 elif choice == '7':
                     response = self.call_server("call_tool", {"name": "tool_sum", "arguments": {"a": 0, "b": 0}})
                     shared_state = response.get("result", {}).get("shared_state", {})
-                    print("\n📊 Current Shared State:")
-                    if shared_state:
-                        for key, value in shared_state.items():
-                            print(f"   {key}: {value}")
+                    accumulator = shared_state.get("accumulator", 0)
+                    history = shared_state.get("history", [])
+                    
+                    print("\n" + "─" * 60)
+                    print(f"📊 Current Accumulator: {accumulator}")
+                    print("─" * 60)
+                    if history:
+                        print("Operation History:")
+                        for i, op in enumerate(history, 1):
+                            print(f"  {i}. {op}")
                     else:
-                        print("   (empty)")
+                        print("  (no operations yet)")
+                    print("─" * 60)
                     
                 elif choice == '8':
                     self.run_orchestration_demo()
