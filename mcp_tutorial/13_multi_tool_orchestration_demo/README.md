@@ -8,6 +8,8 @@ A simple demonstration of **MCP (Model Context Protocol)** multi-tool orchestrat
 - ✅ **Inter-Tool Dependencies** (tools can use results from other tools)
 - ✅ **Sequential Orchestration** (client calls tools in a workflow)
 - ✅ **Two Communication Methods** (stdio and HTTP)
+- ✅ **Interactive Mode** (menu-driven tool execution with quit option)
+- ✅ **Demo Mode** (automated workflow demonstration)
 
 ---
 
@@ -89,13 +91,41 @@ pip install -r requirements.txt
 
 ## ▶️ Run the Demo
 
+Both versions now support **two modes**:
+1. **Interactive Mode** - Call tools one by one with menu-driven interface
+2. **Demo Mode** - Run the full orchestration workflow automatically
+
 ### Option 1: Stdio Version (Original)
 
 ```bash
 python mcp_client.py
 ```
 
-This runs both server and client in one process using stdio communication.
+**Interactive Mode Example:**
+```
+Choose mode:
+1. Interactive mode (call tools one by one)
+2. Demo mode (run full orchestration workflow)
+
+Select mode (1 or 2): 1
+
+MENU:
+1. tool_sum - Sum two numbers
+2. tool_multiply - Multiply two numbers (uses last_sum if available)
+3. tool_subtract - Subtract two numbers
+4. tool_divide - Divide two numbers
+5. tool_average - Average a list of numbers
+6. list_tools - Show all available tools
+7. demo - Run the full orchestration demo
+8. quit - Exit
+
+Select an option (1-8): 1
+Enter first number (a): 10
+Enter second number (b): 5
+
+✓ Result: 15.0
+  Shared State: {'last_sum': 15.0}
+```
 
 ### Option 2: HTTP Version (Network-Based)
 
@@ -109,7 +139,30 @@ python mcp_server_http.py
 python mcp_client_http.py
 ```
 
-This runs server and client as separate processes using HTTP communication.
+**Interactive Mode Features:**
+- Choose which tool to call
+- Provide custom inputs
+- See shared state after each operation
+- Run full demo anytime (option 8)
+- Quit anytime by typing 'quit', 'exit', 'q', or selecting option 9 (HTTP) / 8 (stdio)
+
+---
+
+## 🎮 Interactive Mode Commands
+
+Both clients support these interactive commands:
+
+| Option | Command | Description |
+|--------|---------|-------------|
+| 1 | tool_sum | Sum two numbers |
+| 2 | tool_multiply | Multiply (uses last_sum if available) |
+| 3 | tool_subtract | Subtract two numbers |
+| 4 | tool_divide | Divide two numbers |
+| 5 | tool_average | Average a list of numbers |
+| 6 | list_tools | Show all available tools |
+| 7 (HTTP) | show_state | Show current shared state |
+| 7/8 | demo | Run full orchestration workflow |
+| 8/9 or 'quit' | Exit | Quit interactive mode |
 
 ---
 
