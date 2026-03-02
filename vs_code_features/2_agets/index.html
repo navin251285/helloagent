@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern, responsive task manager application">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Task Manager</h1>
+            <p class="subtitle">Stay organized and productive</p>
+        </header>
+
+        <main>
+            <section class="task-input-section" aria-label="Add new task">
+                <form id="taskForm" class="task-form">
+                    <div class="input-group">
+                        <label for="taskInput" class="visually-hidden">New task</label>
+                        <input 
+                            type="text" 
+                            id="taskInput" 
+                            class="task-input" 
+                            placeholder="What needs to be done?"
+                            aria-label="Task description"
+                            required
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="btn btn-primary" aria-label="Add task">
+                            <span aria-hidden="true">+</span>
+                            <span class="btn-text">Add Task</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="task-stats" aria-label="Task statistics">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalTasks">0</span>
+                    <span class="stat-label">Total</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="activeTasks">0</span>
+                    <span class="stat-label">Active</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="completedTasks">0</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+            </section>
+
+            <section class="task-list-section">
+                <div class="filter-buttons" role="group" aria-label="Filter tasks">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                </div>
+
+                <ul id="taskList" class="task-list" role="list" aria-label="Tasks">
+                    <!-- Tasks will be dynamically added here -->
+                </ul>
+
+                <div id="emptyState" class="empty-state">
+                    <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    <p>No tasks yet. Add one to get started!</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <button id="clearCompleted" class="btn btn-secondary" aria-label="Clear all completed tasks">
+                Clear Completed
+            </button>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
