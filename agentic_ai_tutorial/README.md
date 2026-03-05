@@ -62,12 +62,12 @@ python -m ipykernel install --user --name agentic-ai --display-name "Python (age
 ## 6. Run Lessons
 
 ```bash
-cd .converted_py
-python Lesson_0_What_is_an_Agent.py
+cd python_files
+python Lesson_00_What_is_an_Agent.py
 ```
 
 Run any lesson script, for example:
-- `Lesson_0_What_is_an_Agent.py`
+- `Lesson_00_What_is_an_Agent.py`
 - `Lesson_53_Budget_Aware_Agents.py`
 - `Lesson_66_Production_Grade_Agentic_AI_Architecture.py`
 
