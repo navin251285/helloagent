@@ -374,10 +374,8 @@ print("="*60)
 
 
 try:
-    from IPython.display import Image, display
     print("Stateless Loop Graph Architecture:")
     try:
-        display(Image(graph.get_graph().draw_mermaid_png()))
         print("✓ Graph rendered successfully")
     except:
         print("""

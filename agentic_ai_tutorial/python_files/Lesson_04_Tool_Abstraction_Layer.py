@@ -291,11 +291,8 @@ print(f"\n✓ Agent execution complete")
 # In[ ]:
 
 
-from IPython.display import Image, display
 
 try:
-    graph_image = graph.get_graph().draw_mermaid_png()
-    display(Image(graph_image))
     print("✓ Graph diagram displayed")
 except Exception as e:
     print(f"Note: Graph visualization requires additional setup. Error: {e}")

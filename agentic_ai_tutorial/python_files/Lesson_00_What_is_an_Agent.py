@@ -345,12 +345,10 @@ print("\n✅ GRAPHICAL AGENT TEST PASSED")
 
 # Visualize the graph
 try:
-    from IPython.display import Image, display
     print("Graph Visualization:")
     # Note: Mermaid PNG generation requires graphviz installed
     # This may not render in all environments, but the graph is still working
     try:
-        display(Image(graph.get_graph().draw_mermaid_png()))
     except:
         print("Note: Graph rendering requires graphviz. The graph structure is:")
         print("Input → [reason node] → Output")

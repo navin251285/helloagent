@@ -543,10 +543,8 @@ if len(steps) > 3:
 
 
 try:
-    from IPython.display import Image, display
     print("Structured Decision Agent Graph:")
     try:
-        display(Image(graph.get_graph().draw_mermaid_png()))
         print("✓ Graph rendered successfully")
     except:
         print("""

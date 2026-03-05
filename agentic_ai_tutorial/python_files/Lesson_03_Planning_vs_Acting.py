@@ -596,10 +596,8 @@ print("""
 
 
 try:
-    from IPython.display import Image, display
     print("Deliberative Agent Graph:")
     try:
-        display(Image(deliberative_graph.get_graph().draw_mermaid_png()))
         print("✓ Graph rendered successfully")
     except:
         print("""
